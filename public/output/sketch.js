@@ -87,16 +87,16 @@ function draw() {
       textSize(24);
       textLeading(34)
       text("Now you are both trying to get close to your color", width/2, 20);
-      text("It is good for you to be close to your color", width/2, 40);
-      text("It is good for the other player to be close to their color as well", width/2, 60);
-      text("Rotate the phone around together to try to find what you want", width/2, 80);
-      text("Hit the SPACEBAR when you both agreed to a color!", width/2, 100);
+      text("It is good for you to be close to your color", width/2, 50);
+      text("It is good for the other player to be close to their color as well", width/2, 80);
+      text("Rotate the phone around together to try to find what you want", width/2, 110);
+      text("Hit the SPACEBAR when you both agreed to a color!", width/2, 140);
     } else if (isGameEnded){
       background("white");
       textSize(48);
       textLeading(54)
       text("You were " + Math.floor(dist(myX,myY,usX,usY)) + " pixels away from your color", width/2, 50);
-      text("How far away was your partner?", width/2, 70);
+      text("How far away was your partner?", width/2, 90);
     }
 }
 
