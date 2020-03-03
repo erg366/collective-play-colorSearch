@@ -23,10 +23,10 @@ let usY = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  frameRate(15)
   if (width < height) {
       r = width/2;
-  }
-  else {
+  } else {
       r = height/2;
   }
   textAlign(CENTER);
@@ -58,71 +58,73 @@ function setup() {
   // Listen for message
   socket.on('data', function (data) {
     if (!endGame) {
-        usX = data.x * width;
-        usY = data.y * height;
-        currentH = allPix[usX][usY].hue;
-        currentS = allPix[usX][usY].sat;
+      usX = data.x * width;
+      usY = data.y * height;
+      currentH = allPix[usX][usY].hue;
+      currentS = allPix[usX][usY].sat;
     }
   });
 }
 
 function draw() {
+    console.log('draw');
+  
     if (!choseColor) {
-        background("white");
-        for (let i = 0; i < allPix.length; i++) {
-            for (let j = 0; j < allPix[i].length; j++) {
-              stroke(allPix[i][j].hue, allPix[i][j].sat, 100);
-              point(i, j);
-            }
+      background("white");
+      for (let i = 0; i < allPix.length; i++) {
+        for (let j = 0; j < allPix[i].length; j++) {
+          stroke(allPix[i][j].hue, allPix[i][j].sat, 100);
+          point(i, j);
         }
-        
-        fill('black');
-        text("move around the color wheel with your mouse", width/2, 30);
-        text("click to select a color and send it to the server", width/2, 50);
-        
-        if (dist(width/2,height/2,mouseX,mouseY) < r) {
-            fill(allPix[mouseX][mouseY].hue, allPix[mouseX][mouseY].sat, 100);
-            rect(0,0,50,50);
-        }
+      }
+      
+      fill('black');
+      text("move around the color wheel with your mouse", width/2, 30);
+      text("click to select a color and send it to the server", width/2, 50);
+      
+      if (dist(width/2,height/2,mouseX,mouseY) < r) {
+        fill(allPix[mouseX][mouseY].hue, allPix[mouseX][mouseY].sat, 100);
+        rect(0,0,50,50);
+      }
     }
     
     else if (!endGame) {
-        background("white");
-        
-        rectMode(CENTER);
-        fill(currentH, currentS, 100);
-        rect(width/2, height/2, 100, 100);
-        
-        text("now you are both trying to get close to your color", width/2, 20);
-        text("it is good for you to be close to your color", width/2, 40);
-        text("it is good for the other player to be close to their color as well", width/2, 60);
-        text("move around the invisible color wheel by rotating the phone together", width/2, 80);
-        text("click again when you have chosen a spot", width/2, 100);
+      background("white");
+      
+      rectMode(CENTER);
+      fill(currentH, currentS, 100);
+      rect(width/2, height/2, 100, 100);
+      
+      text("now you are both trying to get close to your color", width/2, 20);
+      text("it is good for you to be close to your color", width/2, 40);
+      text("it is good for the other player to be close to their color as well", width/2, 60);
+      text("move around the invisible color wheel by rotating the phone together", width/2, 80);
+      text("click again when you have chosen a spot", width/2, 100);
     }
     
     else {
-        background("white");
-        
-        text("you were " + dist(myX,myY,usX,usY) + " pixels away from your color", width/2, 50);
-        text("how far away was your partner?", width/2, 70);
+      background("white");
+      
+      text("you were " + dist(myX,myY,usX,usY) + " pixels away from your color", width/2, 50);
+      text("how far away was your partner?", width/2, 70);
     }
 }
 
 function mousePressed() {
-    if (!choseColor) {
-        if (dist(width/2,height/2,mouseX,mouseY) < r) {
-            myX = mouseX;
-            myY = mouseY;
-            let hue = allPix[mouseX][mouseY].hue;
-            let sat = allPix[mouseX][mouseY].sat;
-            choseColor = true;
-            socket.emit('selected', {hue: hue, sat: sat});
-        }
+  if (!choseColor) {
+    if (dist(width/2,height/2,mouseX,mouseY) < r) {
+      myX = mouseX;
+      myY = mouseY;
+      let hue = allPix[mouseX][mouseY].hue;
+      let sat = allPix[mouseX][mouseY].sat;
+      choseColor = true;
+      socket.emit('selected', {hue: hue, sat: sat});
     }
-    
-    else if (!endGame) {
-        endGame = true;
-    }
+  }
+  
+  else if (!endGame) {
+    endGame = true;
+  }
 }
 
 class Pix {
