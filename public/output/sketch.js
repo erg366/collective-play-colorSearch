@@ -85,7 +85,7 @@ function draw() {
       
       fill(0)
       textSize(24);
-      textLeading(30)
+      textLeading(34)
       text("Now you are both trying to get close to your color", width/2, 20);
       text("It is good for you to be close to your color", width/2, 40);
       text("It is good for the other player to be close to their color as well", width/2, 60);
@@ -95,7 +95,7 @@ function draw() {
       background("white");
       textSize(48);
       textLeading(54)
-      text("You were " + dist(myX,myY,usX,usY) + " pixels away from your color", width/2, 50);
+      text("You were " + Math.floor(dist(myX,myY,usX,usY)) + " pixels away from your color", width/2, 50);
       text("How far away was your partner?", width/2, 70);
     }
 }
