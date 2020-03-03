@@ -8,6 +8,12 @@ let server = require('http').createServer(app).listen(port, function () {
 
 let outputClients = [];
 
+app.get('/status', function(req, res) {
+  res.json({
+    output_clients: outputClients
+  })
+})
+
 // Tell server where to look for files
 app.use(express.static('public'));
 
@@ -50,3 +56,5 @@ inputs.on('connection', function (socket) {
   }
 
 });
+
+

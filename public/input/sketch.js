@@ -16,6 +16,8 @@ socket.on('connect', function() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  frameRate(10)
+}
 
 function draw(){
   background(255);
@@ -30,4 +32,18 @@ function draw(){
 
   // Send tilt angles as normalized x,y coordinates
   socket.emit('data', {x: x / width, y: y / height});
+  console.log('data', { x: x / width, y: y / height });
 }
+
+
+// function setup() {
+//   createCanvas(100, 100, WEBGL);
+// }
+
+// function draw() {
+//   background(200);
+//   rotateZ(radians(rotationZ));
+//   rotateX(radians(rotationX));
+//   rotateY(radians(rotationY));
+//   box(200, 200, 200);
+// }
